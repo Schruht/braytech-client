@@ -1,0 +1,79 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #252525;
+    color: white;
+    padding: 40px 20px 20px 20px;
+    font-family: sans-serif;
+}
+
+.content {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+h1 {
+    font-size: 17px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding-left: 15px;
+}
+
+.list {
+    list-style: none;
+    width: 100%;
+    padding: 0;
+}
+
+.list-cell:hover {
+    background-color: #202020;
+}
+
+.list-cell {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    line-height: 50px;
+    padding: 0 35px 0 35px;
+    box-sizing: border-box;
+    font-size: 14px;
+    user-select: none;
+}
+
+.cell-subtitle {
+    font-size: 13px;
+    color: #707070;
+    font-weight: bolder;
+}
+
+.cell-accessory {
+    float: right;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+}
+
+.settings-button-icon {
+    height: 20px;
+    width: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.destructive {
+    background-image: URL(../assets/destroy.png);
+}
+
+.continue {
+    background-image: URL(../assets/continue.png);
+}

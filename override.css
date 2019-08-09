@@ -1,0 +1,20 @@
+body {
+    padding-top: 30px !important;
+    background-color: transparent !important;
+}
+
+::-webkit-scrollbar {
+    width: 17px;
+}
+
+::-webkit-scrollbar-track {
+    background: #151515;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #303030;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #353535;
+}

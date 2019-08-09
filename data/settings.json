@@ -1,0 +1,16 @@
+{
+    "version": {
+        "displayname": "Version",
+        "value": "0.1"
+    },
+    "devmode": {
+        "displayname": "Developer Features",
+        "type": "switch",
+        "value": true
+    },
+    "braytech_beta": {
+        "displayname": "Use beta.braytech.org",
+        "type": "switch",
+        "value": false
+    }
+}

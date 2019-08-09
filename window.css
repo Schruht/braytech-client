@@ -1,0 +1,145 @@
+.window-frame {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 30px;
+    z-index: 1;
+    background-color: #202020EA;
+    backdrop-filter: blur(10px);
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+}
+
+.window-controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: nowrap;
+
+    -webkit-user-select: all;
+    -webkit-app-region: no-drag;
+}
+
+.window-control {
+    position: relative;
+    height: 30px;
+    width: 33.34px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    flex-grow: 1;
+}
+
+.window-control:hover {
+    background-color: #252525;
+}
+
+#close {
+    background-image: URL(assets/window-controls/close.png)
+}
+
+#min {
+    background-image: URL(assets/window-controls/min.png)
+}
+
+#max {
+    background-image: URL(assets/window-controls/max.png)
+}
+
+#restore {
+    background-image: URL(assets/window-controls/restore.png)
+}
+
+#close:hover {
+    background-color: #cc2020;
+}
+
+.window-controls-left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+#more {
+    background-image: URL(assets/window-controls/more.png);
+}
+
+#back {
+    background-image: URL(assets/window-controls/back.png);
+}
+
+.back-disabled {
+    background-image: URL(assets/window-controls/back-disabled.png) !important;
+}
+
+.back-disabled:hover {
+    background-color: #202020 !important;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    z-index: 2;
+    background-color: #252525;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: white;
+    font-size: 12px;
+    -webkit-user-select: none;
+}
+
+.dropdown-container:hover .dropdown {
+    display: block;
+}
+
+.dropdown li {
+    height: 40px;
+    line-height: 40px;
+    width: 220px;
+    text-align: left;
+    padding: 0px 30px 0px 30px;
+}
+
+.dropdown li:hover {
+    background-color: #202020;
+}
+
+.list-separator {
+    height: 5px !important;
+    background-color: #202020;
+}
+
+.shortcut-hint {
+    float: right;
+    font-size: 10px;
+    color: #CECECE;
+}
+
+.bar-title {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    -webkit-app-region: no-drag;
+    color: #FFFFFF;
+    line-height: 30px;
+    font-size: 12px;
+    padding-left: 10px;
+}
