@@ -113,8 +113,9 @@ document.onreadystatechange = () => {
         })
 
         let date = new Date()
-        let hours = (date.getHours() + date.getTimezoneOffset()) % 24
-        let day = date.getDay() - (date.getHours() + date.getTimezoneOffset() < 0 ? 1 : 0)
+        let tzOffset = date.getTimezoneOffset() / 60
+        let hours = (date.getHours() + tzOffset) % 24 
+        let day = date.getDay() - (date.getHours() + tzOffset < 0 ? 1 : 0)
 
         if ((day == 4 && hours >= 18) || day == 5 || day == 6 || day == 0 || (day == 1 && hours < 18)) {
             xurButton.style.display = 'block'
