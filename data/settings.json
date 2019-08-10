@@ -1,16 +1,27 @@
 {
-    "version": {
-        "displayname": "Version",
-        "value": "0.1"
-    },
     "devmode": {
-        "displayname": "Developer Features",
+        "displayName": "Developer Features",
         "type": "switch",
         "value": true
     },
-    "braytech_beta": {
-        "displayname": "Use beta.braytech.org",
+    "braytechBeta": {
+        "displayName": "Use beta.braytech.org",
         "type": "switch",
         "value": true
+    },
+    "clientTheme": {
+        "displayName": "Client Theme",
+        "type": "pick",
+        "options": [
+            {
+                "display": "Light",
+                "value": "light"
+            },
+            {
+                "display": "Dark",
+                "value": "dark"
+            }
+        ],
+        "value": "light"
     }
 }

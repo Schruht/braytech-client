@@ -10,7 +10,7 @@ document.onreadystatechange = () => {
         content = document.getElementById('main'),
             override = fs.readFileSync('override.css', 'utf8')
 
-        if (getSettings().braytech_beta.value == true) {
+        if (getSettings().braytechBeta.value == true) {
             content.src = 'https://beta.braytech.org'
         } else {
             content.src = 'https://braytech.org'
@@ -42,10 +42,10 @@ document.onreadystatechange = () => {
             xurButton = document.getElementById('xur'),
             quitButton = document.getElementById('quit')
 
-        var shouldResetBackgroundColor = false
-
         Mousetrap.bind(['shift+ctrl+r', 'command+alt+r'], reloadContent)
         Mousetrap.bind(['ctrl+,', 'cmd+,'], openSettings)
+
+        document.documentElement.setAttribute('data-theme', getSettings().clientTheme.value)
 
         minButton.addEventListener('click', event => {
             window = remote.getCurrentWindow();
@@ -99,8 +99,6 @@ document.onreadystatechange = () => {
         xurButton.addEventListener('click', event => {
             navigate('https://www.oldmatexur.com')
             backstack = ['https://braytech.org']
-            document.getElementById('root').style.backgroundColor = '#102014'
-            shouldResetBackgroundColor = true
         })
 
         moreButton.addEventListener('mouseenter', event => {
@@ -163,10 +161,6 @@ document.onreadystatechange = () => {
             if (backButton.enabled) {
                 let target = backstack.pop()
                 content.src = target
-                if (shouldResetBackgroundColor) {
-                    document.getElementById('root').style.backgroundColor = '#202020'
-                    shouldResetBackgroundColor = false
-                }
                 if (backstack.length === 0) {
                     backButton.disable()
                 }

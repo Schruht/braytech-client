@@ -4,8 +4,8 @@ html, body {
 }
 
 body {
-    background-color: #252525;
-    color: white;
+    background-color: var(--secondary-color);
+    color: var(--font-color);
     padding: 40px 20px 20px 20px;
     font-family: sans-serif;
 }
@@ -31,49 +31,31 @@ h1 {
     padding: 0;
 }
 
-.list-cell:hover {
-    background-color: #202020;
-}
-
 .list-cell {
     position: relative;
     height: 50px;
-    width: 100%;
+    width: calc(100% - 70px);
     line-height: 50px;
     padding: 0 35px 0 35px;
-    box-sizing: border-box;
     font-size: 14px;
     user-select: none;
-}
-
-.cell-subtitle {
-    font-size: 13px;
-    color: #707070;
-    font-weight: bolder;
-}
-
-.cell-accessory {
-    float: right;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    align-content: center;
-    justify-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
 }
 
-.settings-button-icon {
-    height: 20px;
+.accessory-dropdown .accessory-dropdown-item {
+    display: none;
+}
+
+.accessory-dropdown-value::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
     width: 20px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}
-
-.destructive {
-    background-image: URL(../assets/destroy.png);
-}
-
-.continue {
-    background-image: URL(../assets/continue.png);
+    background-image: URL('../assets/window-controls/more.png');
 }

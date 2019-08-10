@@ -11,14 +11,16 @@ document.onreadystatechange = () => {
         const closeButton = document.getElementById('close'),
               list = document.getElementById('settings');
 
+        document.documentElement.setAttribute('data-theme', getSettings().clientTheme.value)
+
         settings = getSettings()
 
         for (key in settings) {
-            let entry = settings[key]
-            let element = document.createElement('li')
-            element.classList.add('list-cell')
-            element.innerHTML = `<span>${entry.displayname}</span>${settings.devmode.value == 'true' ? `<span class="cell-subtitle"> .${key}</span>` : ''}${inputFor(key, entry)}`
-            list.appendChild(element)
+            let li = document.createElement('li')
+            li.classList.add('list-cell')
+            li.id = key
+            li.innerHTML = cellFor(key)
+            list.appendChild(li)
         }
 
         closeButton.addEventListener('click', event => {
@@ -26,18 +28,36 @@ document.onreadystatechange = () => {
             window.close();
         });
     }
+}
 
-    function inputFor(key, setting) {
-        switch (setting.type) {
-            case 'switch':
-                return `<input class="cell-accessory" type="checkbox" id="${key}" ${setting.value == 'true' ? 'checked' : ''}>`
-            case 'button':
-                return `<div class="cell-accessory settings-button-icon ${setting.value}"></div>`
-            default:
-                return `<span class="cell-accessory setting-value">${setting.value}</span>`
-        }
+function cellFor(key) {
+    let entry = settings[key]
+    let type = entry.type
+    let value = entry.value
+    let displayName = entry.displayName
+
+    let accessory
+    switch (entry.type) {
+        case 'switch':
+            accessory = `<input id="input-${key}" type="checkbox" class="accessory-checkbox" ${value ? 'checked' : ''}>`
+            break
+        case 'pick':
+            let options = ''
+            let displayValue;
+            for (optionKey in entry.options) {
+                let option = entry.options[optionKey]
+                let isActive = option.value === value
+                if (isActive) {
+                    displayValue = option.display
+                }
+                options += `<div class="accessory-dropdown-item${isActive ? ' accessory-dropdown-item-active' : ''}">${option.display}</div>`
+            }
+            accessory = `<div id="input-${key}" class="accessory-dropdown"><span class="accessory-dropdown-value">${displayValue}</span>${options}</div>`
+            break
     }
-};
+
+    return `<span class="cell-title">${displayName}</span>${accessory}`
+}
 
 function getSettings() {
     return JSON.parse(fs.readFileSync('data/settings.json', 'utf8'));
