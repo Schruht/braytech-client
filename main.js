@@ -1,53 +1,50 @@
-const { app, BrowserWindow, Menu, MenuItem, BrowserView, shell, ipcMain, systemPreferences } = require('electron')
-const path = require('path')
-const config = require('./config.json')
-const discordRPC = require('discord-rich-presence')(config.discord.clientID)
+const {
+        app,
+        BrowserWindow,
+        Menu,
+        MenuItem,
+        BrowserView,
+        shell,
+        ipcMain,
+        systemPreferences
+    } = require("electron"),
+    path = require("path"),
+    config = require("./config.json"),
+    discordRPC = require("discord-rich-presence")(config.discord.clientID);
 
-let mainWindow
-let settingsWindow
+let mainWindow;
+let settingsWindow;
 
 function createWindow() {
+    let menuTemplate = [];
 
-    discordRPC.updatePresence({
-        state: 'In a fireteam',
-        details: 'Raid - Crown of Sorrows',
-        largeImageKey: 'leviathan',
-        largeImageText: 'The Leviathan',
-        smallImageKey: 'hunter',
-        smallImageText: 'Hunter, Level 50',
-        partySize: 5,
-        partyMax: 6
-    })
+    let menu = Menu.buildFromTemplate(menuTemplate);
 
-    let menuTemplate = []
-
-    let menu = Menu.buildFromTemplate(menuTemplate)
-
-    Menu.setApplicationMenu(menu)
+    Menu.setApplicationMenu(menu);
 
     mainWindow = new BrowserWindow({
         width: 1300,
         height: 850,
-        icon: path.join(__dirname, 'assets/icons/braytech-96.png'),
+        icon: path.join(__dirname, "assets/icons/braytech-96.png"),
         frame: false,
-        backgroundColor: '#202020',
+        backgroundColor: "#202020",
         show: false,
         webPreferences: {
             nodeIntegration: true,
             webviewTag: true
         }
-    })
+    });
 
-    mainWindow.loadFile('index.html')
+    mainWindow.loadFile("index.html");
 
-    mainWindow.once('ready-to-show', () => {
-        mainWindow.show()
-    })
+    mainWindow.once("ready-to-show", () => {
+        mainWindow.show();
+    });
 
-    mainWindow.on('closed', function() {
-        mainWindow = null
-        settingsWindow = null
-    })
+    mainWindow.on("closed", function() {
+        mainWindow = null;
+        settingsWindow = null;
+    });
 }
 
 function createSettingsWindow() {
@@ -61,33 +58,33 @@ function createSettingsWindow() {
         webPreferences: {
             nodeIntegration: true
         }
-    })
+    });
 
-    settingsWindow.loadFile(path.join(__dirname, 'pages/settings.html'))
+    settingsWindow.loadFile(path.join(__dirname, "pages/settings.html"));
 
-    settingsWindow.once('ready-to-show', () => {
-        settingsWindow.show()
-    })
+    settingsWindow.once("ready-to-show", () => {
+        settingsWindow.show();
+    });
 }
 
-app.on('ready', createWindow)
+app.on("ready", createWindow);
 
-app.on('window-all-closed', function() {
-    if (process.platform !== 'darwin') app.quit()
-})
+app.on("window-all-closed", function() {
+    if (process.platform !== "darwin") app.quit();
+});
 
-app.on('activate', function() {
-    if (mainWindow === null) createWindow()
-})
+app.on("activate", function() {
+    if (mainWindow === null) createWindow();
+});
 
-ipcMain.on('showSettings', (event, arg) => {
-    createSettingsWindow()
-})
+ipcMain.on("showSettings", (event, arg) => {
+    createSettingsWindow();
+});
 
-ipcMain.on('setDiscordRichPresence', (event, arg) => {
-    discordRPC.updatePresence(arg)
-})
+ipcMain.on("setDiscordRichPresence", (event, arg) => {
+    discordRPC.updatePresence(arg);
+});
 
-ipcMain.on('quit', event => {
-    app.quit()
-})
+ipcMain.on("quit", event => {
+    app.quit();
+});
