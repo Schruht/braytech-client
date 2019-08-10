@@ -9,7 +9,7 @@ document.onreadystatechange = () => {
         let window = remote.getCurrentWindow();
 
         const closeButton = document.getElementById('close'),
-              list = document.getElementById('settings');
+            list = document.getElementById('settings');
 
         document.documentElement.setAttribute('data-theme', getSettings().clientTheme.value)
 
@@ -60,5 +60,5 @@ function cellFor(key) {
 }
 
 function getSettings() {
-    return JSON.parse(fs.readFileSync('data/settings.json', 'utf8'));
+    return JSON.parse(fs.readFileSync(path.join(__dirname, '../../data/settings.json'), 'utf8'));
 }

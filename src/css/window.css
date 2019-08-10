@@ -1,0 +1,165 @@
+:root {
+    --min: URL(../assets/window-controls/min.png);
+    --max: URL(../assets/window-controls/max.png);
+    --restore: URL(../assets/window-controls/restore.png);
+    --close: URL(../assets/window-controls/close.png);
+    --back: URL(../assets/window-controls/back.png);
+    --back-disabled: URL(../assets/window-controls/back-disabled.png);
+    --more: URL(../assets/window-controls/more.png);
+}
+
+[data-theme="light"] {
+    --min: URL(../assets/window-controls/min-light.png);
+    --max: URL(../assets/window-controls/max-light.png);
+    --restore: URL(../assets/window-controls/restore-light.png);
+    --close: URL(../assets/window-controls/close-light.png);
+    --back: URL(../assets/window-controls/back-light.png);
+    --back-disabled: URL(../assets/window-controls/back-disabled-light.png);
+    --more: URL(../assets/window-controls/more-light.png);
+}
+
+.window-frame {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 30px;
+    z-index: 1;
+    background-color: var(--primary-transparent);
+    backdrop-filter: blur(10px);
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+}
+
+.window-controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: nowrap;
+    -webkit-user-select: all;
+    -webkit-app-region: no-drag;
+}
+
+.window-control {
+    position: relative;
+    height: 30px;
+    width: 38px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.window-control:hover {
+    background-color: var(--secondary-color);
+}
+
+#close {
+    background-image: var(--close);
+}
+
+#min {
+    background-image: var(--min);
+}
+
+#max {
+    background-image: var(--max);
+}
+
+#restore {
+    background-image: var(--restore);
+}
+
+#close:hover {
+    background-color: #cc2020;
+    background-image: URL(../assets/window-controls/close.png);
+}
+
+.window-controls-left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+#more {
+    background-image: var(--more);
+}
+
+#back {
+    background-image: var(--back);
+}
+
+.back-disabled {
+    background-image: var(--back-disabled) !important;
+}
+
+.back-disabled:hover {
+    background-color: transparent !important;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    z-index: 2;
+    background-color: var(--secondary-color);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--font-color);
+    font-size: 12px;
+    -webkit-user-select: none;
+}
+
+.dropdown-container:hover .dropdown {
+    display: block;
+}
+
+.dropdown li {
+    height: 40px;
+    line-height: 40px;
+    width: 220px;
+    text-align: left;
+    padding: 0px 30px 0px 30px;
+}
+
+.dropdown li:hover {
+    background-color: var(--primary-color);
+}
+
+.list-separator {
+    height: 5px !important;
+    background-color: var(--primary-color);
+}
+
+.shortcut-hint {
+    float: right;
+    font-size: 10px;
+    color: var(--secondary-text-color);
+}
+
+.bar-title {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    -webkit-app-region: no-drag;
+    color: var(--font-color);
+    line-height: 30px;
+    font-size: 12px;
+    font-weight: bold;
+    padding-left: 10px;
+}
