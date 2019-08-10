@@ -8,6 +8,17 @@ let settingsWindow
 
 function createWindow() {
 
+    discordRPC.updatePresence({
+        state: 'In a fireteam',
+        details: 'Raid - Crown of Sorrows',
+        largeImageKey: 'leviathan',
+        largeImageText: 'The Leviathan',
+        smallImageKey: 'hunter',
+        smallImageText: 'Hunter, Level 50',
+        partySize: 5,
+        partyMax: 6
+    })
+
     let menuTemplate = []
 
     let menu = Menu.buildFromTemplate(menuTemplate)
@@ -77,9 +88,6 @@ ipcMain.on('setDiscordRichPresence', (event, arg) => {
     discordRPC.updatePresence(arg)
 })
 
-ipcMain.on('getSystemDarkMode', event => {
-    if (process.platform === 'darwin') 
-        event.returnValue = systemPreferences.isDarkMode()
-    else 
-        console.log('System dark mode detection is currently only supported on MacOS')
+ipcMain.on('quit', event => {
+    app.quit()
 })

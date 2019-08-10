@@ -17,7 +17,7 @@ html {
     display: none;
     background-image: URL(assets/icons/xur-96.png);
     background-size: 19px 19px;
-    width: 30px;
+    width: 35px;
     margin-left: 3px;
 }
 
@@ -75,9 +75,9 @@ html {
     left: 0;
     z-index: -2;
     background-color: #599047AA;
-    transition: top 0.2s ease;
+    transition: top 0.4s ease;
 }
 
 #xur:hover::before {
-    top: 90%;
+    top: 0;
 }

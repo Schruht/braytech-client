@@ -3,7 +3,7 @@
     top: 0;
     right: 0;
     left: 0;
-    height: 30px;
+    height: 35px;
     z-index: 1;
     background-color: #202020EA;
     backdrop-filter: blur(10px);
@@ -28,12 +28,11 @@
 
 .window-control {
     position: relative;
-    height: 30px;
-    width: 33.34px;
+    height: 35px;
+    width: 38px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    flex-grow: 1;
 }
 
 .window-control:hover {

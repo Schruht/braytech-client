@@ -11,6 +11,6 @@
     "braytech_beta": {
         "displayname": "Use beta.braytech.org",
         "type": "switch",
-        "value": false
+        "value": true
     }
 }

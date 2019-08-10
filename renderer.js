@@ -3,7 +3,7 @@ const path = require('path');
 const Mousetrap = require('mousetrap');
 const fs = require('fs');
 
-var minButton, maxButton, restoreButton, reloadButton, moreButton, settingsButton, creditsButton, backButton, content, devToolsButton, reloadAppButton, xurButton, override
+var minButton, maxButton, restoreButton, reloadButton, moreButton, settingsButton, creditsButton, backButton, content, devToolsButton, reloadAppButton, xurButton, override, quitButton
 
 document.onreadystatechange = () => {
     if (document.readyState == 'interactive') {
@@ -39,7 +39,8 @@ document.onreadystatechange = () => {
             backButton = document.getElementById('back'),
             devToolsButton = document.getElementById('devTools'),
             reloadAppButton = document.getElementById('reloadApp'),
-            xurButton = document.getElementById('xur')
+            xurButton = document.getElementById('xur'),
+            quitButton = document.getElementById('quit')
 
         var shouldResetBackgroundColor = false
 
@@ -110,6 +111,10 @@ document.onreadystatechange = () => {
                 devToolsButton.style.display = 'none'
                 reloadAppButton.style.display = 'none'
             }
+        })
+
+        quitButton.addEventListener('click', event => {
+            ipcRenderer.send('quit')
         })
 
         let date = new Date()
