@@ -216,3 +216,11 @@ function openInBrowser(url) {
 function getSettings() {
     return JSON.parse(fs.readFileSync(path.join(__dirname, '../../data/settings.json'), 'utf8'));
 }
+
+ipcRenderer.on('reload-css', (event) => {
+    document.documentElement.setAttribute(
+        'data-theme',
+        getSettings().clientTheme.value
+    );
+    for (var link of document.querySelectorAll("link[rel=stylesheet]")) link.href = link.href.replace(/\?.*|$/, "?ts=" + new Date().getTime())
+})

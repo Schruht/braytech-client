@@ -141,8 +141,12 @@
 }
 
 .list-separator {
-    height: 5px !important;
-    background-color: var(--primary-color);
+    height: 3px !important;
+    background-color: var(--accent-color);
+}
+
+.list-separator:hover {
+    background-color: var(--accent-color) !important;
 }
 
 .shortcut-hint {

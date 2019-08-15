@@ -35,7 +35,6 @@ function createWindow() {
         title: 'Braytech Client',
         icon: path.join(__dirname, 'src/assets/icons/braytech-96.png'),
         frame: false,
-        backgroundColor: '#202020',
         show: false,
         webPreferences: {
             nodeIntegration: true,
@@ -57,11 +56,12 @@ function createWindow() {
 
 function createSettingsWindow() {
     settingsWindow = new BrowserWindow({
-        width: 500,
-        height: 800,
+        width: 400,
+        height: 450,
         parent: mainWindow,
         title: 'Settings',
         frame: false,
+        transparent: true,
         show: false,
         resizable: false,
         webPreferences: {
@@ -99,6 +99,10 @@ ipcMain.on('showSettings', (event, arg) => {
 ipcMain.on('setDiscordRichPresence', (event, arg) => {
     discordRPC.updatePresence(arg);
 });
+
+ipcMain.on('request-css-reload', (event) => {
+    mainWindow.webContents.send('reload-css')
+})
 
 ipcMain.on('quit', event => {
     app.quit();

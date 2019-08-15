@@ -2,14 +2,18 @@
     --primary-color: #202020;
     --secondary-color: #252525;
     --primary-transparent: #202020EA;
+    --secondary-transparent: #252525EA;
     --font-color: #FFFFFF;
     --secondary-text-color: #CECECE;
+    --accent-color: #202020;
 }
 
 [data-theme="light"] {
     --primary-color: #D0D0D0;
-    --secondary-color: #BABABA;
+    --secondary-color: #BBBBBB;
     --primary-transparent: #D0D0D0DA;
+    --secondary-transparent: #BBBBBBEA;
     --font-color: #000000;
     --secondary-text-color: #505050;
+    --accent-color: #AAAAAA;
 }
