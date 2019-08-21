@@ -3,9 +3,9 @@ const { ipcRenderer, remote } = require('electron'),
     Mousetrap = require('mousetrap'),
     fs = require('fs'),
     xur = require('../modules/xur.js'),
-    DOM = require('../modules/DOM.js')(document).shorthand;
+    DOM = require('../modules/DOM.js')(document);
 
-DOM(function () {
+DOM.onReady(function () {
     let browserWindow = remote.getCurrentWindow();
 
     var {
@@ -22,7 +22,7 @@ DOM(function () {
         reloadAppButton,
         xurButton,
         quitButton
-    } = DOM();
+    } = DOM;
 
     let override = fs.readFileSync(path.join(__dirname, '../css/override.css'), 'utf8')
 

@@ -4,21 +4,6 @@ class _ extends Function {
         this.doc = doc
     }
 
-    get() {
-        let indexedDOM = {}
-        indexedDOM.recurrenceIndex = {}
-
-        let dom = this.doc.getElementsByTagName('*')
-
-        for (var element of dom) {
-            let key = ''
-            if (element.id) {
-                indexedDOM[element.id] = element
-            }
-        }
-        return indexedDOM
-    }
-
     onReady(handler) {
         let self = this
         self.doc.addEventListener('readystatechange', () => {
@@ -30,18 +15,10 @@ class _ extends Function {
 }
 
 module.exports = function (doc) {
-    let result = new _(doc)
-
-    result.shorthand = new Proxy(result, {
-        apply: function (target, thisArg, argArray) {
-            if (argArray.length === 0) {
-                return target.get()
-            }
-            if (argArray.length === 1 && typeof argArray[0] === 'function') {
-                return target.onReady(argArray[0])
-            }
+    return new Proxy(new _(doc), {
+        get: function (target, property) {
+            let element = target.doc.getElementById(property)
+            return element || target[property]
         }
     })
-
-    return result
 }

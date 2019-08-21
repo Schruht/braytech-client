@@ -1,17 +1,17 @@
 const { remote, ipcRenderer } = require('electron'),
     path = require('path'),
     fs = require('fs'),
-    DOM = require('../modules/DOM')(document).shorthand;
+    DOM = require('../modules/DOM')(document);
 
 var settings;
 
-DOM(function () {
+DOM.onReady(function () {
     let window = remote.getCurrentWindow();
 
     const {
         close,
         list
-    } = DOM()
+    } = DOM;
 
     document.documentElement.setAttribute('data-theme', getSettings().clientTheme.value)
 

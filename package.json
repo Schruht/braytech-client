@@ -3,7 +3,7 @@
     "productName": "Braytech Client",
     "version": "0.0.1",
     "description": "Desktop wrapper for braytech.org",
-    "main": "main.js",
+    "main": "app.js",
     "scripts": {
         "start": "electron .",
         "build-dev": "electron-packager . --platform=win32 --prune --out=\"build/dev\""
