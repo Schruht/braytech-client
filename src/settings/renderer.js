@@ -1,30 +1,31 @@
-const {remote, ipcRenderer} = require('electron');
-const path = require('path');
-const fs = require('fs');
+const { remote, ipcRenderer } = require('electron'),
+    path = require('path'),
+    fs = require('fs'),
+    DOM = require('../modules/DOM')(document).shorthand;
 
 var settings;
 
-document.onreadystatechange = () => {
-    if (document.readyState == 'complete') {
-        let window = remote.getCurrentWindow();
+DOM(function () {
+    let window = remote.getCurrentWindow();
 
-        const closeButton = document.getElementById('close'),
-            list = document.getElementById('settings');
+    const {
+        close,
+        list
+    } = DOM()
 
-        document.documentElement.setAttribute('data-theme', getSettings().clientTheme.value)
+    document.documentElement.setAttribute('data-theme', getSettings().clientTheme.value)
 
-        settings = getSettings()
+    settings = getSettings()
 
-        for (key in settings) {
-            list.appendChild(cellFor(key))
-        }
-
-        closeButton.addEventListener('click', event => {
-            window = remote.getCurrentWindow();
-            window.close();
-        });
+    for (key in settings) {
+        list.appendChild(cellFor(key))
     }
-}
+
+    close.addEventListener('click', event => {
+        window = remote.getCurrentWindow();
+        window.close();
+    });
+})
 
 function cellFor(key) {
     let entry = settings[key]
@@ -69,7 +70,7 @@ function writeChange(DOMElement, key, newValue) {
 
     console.log(`DOMElement: ${DOMElement}, Key: ${key}, newValue: ${newValue}`)
 
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         let settings = getSettings()
         let setting = settings[key]
         setting.value = newValue
@@ -86,9 +87,9 @@ function writeChange(DOMElement, key, newValue) {
         }
 
         fs.writeFile(path.join(__dirname, '../../data/settings.json'), settingsString, 'utf8', (err) => {
-            if (err) 
+            if (err)
                 reject(err)
-            else 
+            else
                 if (setting.requiresCSSUpdate) {
                     ipcRenderer.send('request-css-reload')
 
@@ -98,7 +99,7 @@ function writeChange(DOMElement, key, newValue) {
                     );
                     for (var link of document.querySelectorAll("link[rel=stylesheet]")) link.href = link.href.replace(/\?.*|$/, "?ts=" + new Date().getTime())
                 }
-                resolve()
+            resolve()
         });
     })
 }

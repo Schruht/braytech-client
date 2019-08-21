@@ -12,28 +12,28 @@
 <body id="root">
     <div class="window-frame">
         <div class="window-controls-left">
-            <div class="window-control dropdown-container" id="more">
+            <div class="window-control dropdown-container" id="moreButton">
                 <ul class="dropdown">
-                    <li id="reload">
+                    <li id="reloadButton">
                         Reload<span class="shortcut-hint">Shift + Ctrl + R</span>
                     </li>
-                    <li id="reloadApp" style="display:none">
+                    <li id="reloadAppButton" style="display:none">
                         Reload Window<span class="shortcut-hint">Ctrl + R</span>
                     </li>
-                    <li id="devTools" style="display:none">Toggle Developer Tools</li>
+                    <li id="devToolsButton" style="display:none">Toggle Developer Tools</li>
                     <li class="list-separator"></li>
-                    <li id="settings">
+                    <li id="settingsButton">
                         Settings<span class="shortcut-hint">Ctrl + ,</span>
                     </li>
-                    <li id="credits">Credits</li>
+                    <li id="creditsButton">Credits</li>
                     <li class="list-separator"></li>
-                    <li id="quit">
+                    <li id="quitButton">
                         Close Braytech Client<span class="shortcut-hint">Alt + F4</span>
                     </li>
                 </ul>
             </div>
-            <div class="window-control back-disabled" id="back"></div>
-            <div class="window-control" id="xur">
+            <div class="window-control back-disabled" id="backButton"></div>
+            <div class="window-control" id="xurButton">
                 <div id="xur-animation-container">
                     <div id="xur-animation-rotate"></div>
                 </div>
@@ -46,7 +46,7 @@
             <div class="window-control" id="close"></div>
         </div>
     </div>
-    <webview id="main" src=""></webview>
+    <webview id="content" src=""></webview>
     <script src="./renderer.js"></script>
 </body>
 

@@ -1,226 +1,190 @@
 const { ipcRenderer, remote } = require('electron'),
-    path = require('path'),
-    Mousetrap = require('mousetrap'),
-    fs = require('fs');
+						 path = require('path'),
+					Mousetrap = require('mousetrap'),
+						   fs = require('fs'),
+						  xur = require('../modules/xur.js'),
+						    DOM = require('../modules/DOM.js')(document).shorthand;
 
-var minButton,
-    maxButton,
-    restoreButton,
-    reloadButton,
-    moreButton,
-    settingsButton,
-    creditsButton,
-    backButton,
-    content,
-    devToolsButton,
-    reloadAppButton,
-    xurButton,
-    override,
-    quitButton;
+DOM(function () {
+	let browserWindow = remote.getCurrentWindow();
 
-document.onreadystatechange = () => {
-    if (document.readyState == 'interactive') {
-        content = document.getElementById('main')
+	var {
+		content,
+		min,
+		restore,
+		close,
+		reloadButton,
+		moreButton,
+		settingsButton,
+		creditsButton,
+		backButton,
+		devToolsButton,
+		reloadAppButton,
+		xurButton,
+		quitButton
+	} = DOM();
 
-        override = fs.readFileSync(path.join(__dirname, '../css/override.css'), 'utf8')
+	let override = fs.readFileSync(path.join(__dirname, '../css/override.css'), 'utf8')
 
-        if (getSettings().braytechBeta.value == true) {
-            content.src = 'https://beta.braytech.org';
-        } else {
-            content.src = 'https://braytech.org';
-        }
+	if (getSettings().braytechBeta.value == true) {
+		content.src = 'https://beta.braytech.org';
+	} else {
+		content.src = 'https://braytech.org';
+	}
 
-        content.addEventListener('dom-ready', function() {
-            content.insertCSS(override);
-        });
+	content.addEventListener('dom-ready', function () {
+		content.insertCSS(override);
+	});
 
-        content.addEventListener('new-window', event => {
-            openInBrowser(event.url);
-        });
-    } else if (document.readyState == 'complete') {
-        let window = remote.getCurrentWindow();
+	content.addEventListener('new-window', event => {
+		openInBrowser(event.url);
+	});
 
-        minButton = document.getElementById('min')
-        maxButton = document.getElementById('max')
-        restoreButton = document.getElementById('restore')
-        closeButton = document.getElementById('close')
-        reloadButton = document.getElementById('reload')
-        moreButton = document.getElementById('more')
-        settingsButton = document.getElementById('settings')
-        creditsButton = document.getElementById('credits')
-        backButton = document.getElementById('back')
-        devToolsButton = document.getElementById('devTools')
-        reloadAppButton = document.getElementById('reloadApp')
-        xurButton = document.getElementById('xur')
-        quitButton = document.getElementById('quit')
+	Mousetrap.bind(['shift+ctrl+r', 'command+alt+r'], reloadContent);
+	Mousetrap.bind(['ctrl+,', 'cmd+,'], openSettings);
+	Mousetrap.bind(['ctrl+r', 'cmd+r'], reloadApp);
 
-        Mousetrap.bind(['shift+ctrl+r', 'command+alt+r'], reloadContent);
-        Mousetrap.bind(['ctrl+,', 'cmd+,'], openSettings);
-        Mousetrap.bind(['ctrl+r', 'cmd+r'], reloadApp);
+	document.documentElement.setAttribute(
+		'data-theme',
+		getSettings().clientTheme.value
+	);
 
-        document.documentElement.setAttribute(
-            'data-theme',
-            getSettings().clientTheme.value
-        );
+	min.addEventListener('click', event => {
+		browserWindow = remote.getCurrentWindow();
+		browserWindow.minimize();
+	});
 
-        minButton.addEventListener('click', event => {
-            window = remote.getCurrentWindow();
-            window.minimize();
-        });
+	max.addEventListener('click', event => {
+		browserWindow = remote.getCurrentWindow();
+		browserWindow.maximize();
+		toggleMaxRestores();
+	});
 
-        maxButton.addEventListener('click', event => {
-            window = remote.getCurrentWindow();
-            window.maximize();
-            toggleMaxRestoreButtons();
-        });
+	restore.addEventListener('click', event => {
+		browserWindow = remote.getCurrentWindow();
+		browserWindow.unmaximize();
+		toggleMaxRestores();
+	});
 
-        restoreButton.addEventListener('click', event => {
-            window = remote.getCurrentWindow();
-            window.unmaximize();
-            toggleMaxRestoreButtons();
-        });
+	toggleMaxRestores();
+	browserWindow.on('maximize', toggleMaxRestores);
+	browserWindow.on('unmaximize', toggleMaxRestores);
 
-        toggleMaxRestoreButtons();
-        window.on('maximize', toggleMaxRestoreButtons);
-        window.on('unmaximize', toggleMaxRestoreButtons);
+	close.addEventListener('click', event => {
+		browserWindow = remote.getCurrentWindow();
+		browserWindow.close();
+	});
 
-        closeButton.addEventListener('click', event => {
-            window = remote.getCurrentWindow();
-            window.close();
-        });
+	reloadButton.addEventListener('click', reloadContent);
 
-        reloadButton.addEventListener('click', event => {
-            reloadContent();
-        });
+	settingsButton.addEventListener('click', event => {
+		openSettings();
+	});
 
-        settingsButton.addEventListener('click', event => {
-            openSettings();
-        });
+	backButton.addEventListener('click', back);
 
-        backButton.addEventListener('click', back);
+	creditsButton.addEventListener('click', event => {
+		navigate(path.join(__dirname, '../credits.html'));
+		backstack = ['https://braytech.org'];
+	});
 
-        creditsButton.addEventListener('click', event => {
-            navigate(path.join(__dirname, '../credits.html'));
-            backstack = ['https://braytech.org'];
-        });
+	devToolsButton.addEventListener('click', toggleDevTools);
 
-        devToolsButton.addEventListener('click', event => {
-            toggleDevTools();
-        });
+	reloadAppButton.addEventListener('click', reloadApp);
 
-        reloadAppButton.addEventListener('click', event => {
-            reloadApp();
-        });
+	xurButton.addEventListener('click', event => {
+		navigate('https://www.oldmatexur.com');
+		backstack = ['https://braytech.org'];
+	});
 
-        xurButton.addEventListener('click', event => {
-            navigate('https://www.oldmatexur.com');
-            backstack = ['https://braytech.org'];
-        });
+	moreButton.addEventListener('mouseenter', event => {
+		if (getSettings().devmode.value == true) {
+			devToolsButton.style.display = 'block';
+			reloadAppButton.style.display = 'block';
+		} else {
+			devToolsButton.style.display = 'none';
+			reloadAppButton.style.display = 'none';
+		}
+	});
 
-        moreButton.addEventListener('mouseenter', event => {
-            if (getSettings().devmode.value == true) {
-                devToolsButton.style.display = 'block';
-                reloadAppButton.style.display = 'block';
-            } else {
-                devToolsButton.style.display = 'none';
-                reloadAppButton.style.display = 'none';
-            }
-        });
+	if (xur.isAround) {
+		xurButton.style.display = 'block';
+	}
 
-        quitButton.addEventListener('click', event => {
-            ipcRenderer.send('quit');
-        });
+	function toggleMaxRestores() {
+		browserWindow = remote.getCurrentWindow();
+		if (browserWindow.isMaximized()) {
+			max.style.display = 'none';
+			restore.style.display = 'block';
+		} else {
+			restore.style.display = 'none';
+			max.style.display = 'block';
+		}
+	}
 
-        let date = new Date();
-        let tzOffset = date.getTimezoneOffset() / 60;
-        let hours = (date.getHours() + tzOffset) % 24;
-        let day = date.getDay() - (date.getHours() + tzOffset < 0 ? 1 : 0);
+	var backstack = [];
+	back.enabled = false;
 
-        if (
-            (day == 4 && hours >= 18) ||
-            day == 5 ||
-            day == 6 ||
-            day == 0 ||
-            (day == 1 && hours < 18)
-        ) {
-            xurButton.style.display = 'block';
-        }
+	function navigate(file) {
+		let currentContent = content.src;
+		backstack.push(currentContent);
+		if (backstack.length === 1) {
+			backButton.enable();
+		}
+		content.src = file;
+	}
 
-        function toggleMaxRestoreButtons() {
-            window = remote.getCurrentWindow();
-            if (window.isMaximized()) {
-                maxButton.style.display = 'none';
-                restoreButton.style.display = 'block';
-            } else {
-                restoreButton.style.display = 'none';
-                maxButton.style.display = 'block';
-            }
-        }
+	backButton.enable = function () {
+		backButton.classList.remove('back-disabled');
+		backButton.enabled = true;
+	};
 
-        var backstack = [];
-        backButton.enabled = false;
+	backButton.disable = function () {
+		backButton.classList.add('back-disabled');
+		backButton.enabled = false;
+	};
 
-        function navigate(file) {
-            let currentContent = content.src;
-            backstack.push(currentContent);
-            if (backstack.length === 1) {
-                backButton.enable();
-            }
-            content.src = file;
-        }
+	function back() {
+		if (backButton.enabled) {
+			let target = backstack.pop();
+			content.src = target;
+			if (backstack.length === 0) {
+				backButton.disable();
+			}
+		}
+	}
 
-        backButton.enable = function() {
-            backButton.classList.remove('back-disabled');
-            backButton.enabled = true;
-        };
+	function reloadContent() {
+		content.src = content.src;
+	}
 
-        backButton.disable = function() {
-            backButton.classList.add('back-disabled');
-            backButton.enabled = false;
-        };
+	function openSettings() {
+		ipcRenderer.send('showSettings');
+	}
 
-        function back() {
-            if (backButton.enabled) {
-                let target = backstack.pop();
-                content.src = target;
-                if (backstack.length === 0) {
-                    backButton.disable();
-                }
-            }
-        }
+	function reloadApp() {
+		browserWindow = remote.getCurrentWindow();
+		browserWindow.reload();
+	}
 
-        function reloadContent() {
-            content.src = content.src;
-        }
-
-        function openSettings() {
-            ipcRenderer.send('showSettings');
-        }
-
-        function reloadApp() {
-            window = remote.getCurrentWindow();
-            window.reload();
-        }
-
-        function toggleDevTools() {
-            window = remote.getCurrentWindow();
-            window.toggleDevTools();
-        }
-    }
-};
+	function toggleDevTools() {
+		browserWindow = remote.getCurrentWindow();
+		browserWindow.toggleDevTools();
+	}
+});
 
 function openInBrowser(url) {
-    remote.shell.openExternal(url);
+	remote.shell.openExternal(url);
 }
 
 function getSettings() {
-    return JSON.parse(fs.readFileSync(path.join(__dirname, '../../data/settings.json'), 'utf8'));
+	return JSON.parse(fs.readFileSync(path.join(__dirname, '../../data/settings.json'), 'utf8'));
 }
 
 ipcRenderer.on('reload-css', (event) => {
-    document.documentElement.setAttribute(
-        'data-theme',
-        getSettings().clientTheme.value
-    );
-    for (var link of document.querySelectorAll("link[rel=stylesheet]")) link.href = link.href.replace(/\?.*|$/, "?ts=" + new Date().getTime())
+	document.documentElement.setAttribute(
+		'data-theme',
+		getSettings().clientTheme.value
+	);
+	for (var link of document.querySelectorAll("link[rel=stylesheet]")) link.href = link.href.replace(/\?.*|$/, "?ts=" + new Date().getTime())
 })

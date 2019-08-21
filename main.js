@@ -9,8 +9,7 @@ const {
     systemPreferences
 } = require('electron'),
     path = require('path'),
-    config = require('./src/config.json'),
-    discordRPC = require('discord-rich-presence')(config.discord.clientID);
+    config = require('./src/config.json')
 
 let mainWindow
 let settingsWindow
@@ -46,6 +45,7 @@ function createWindow() {
 
     mainWindow.once('ready-to-show', () => {
         mainWindow.show()
+        mainWindow.webContents.openDevTools()
     });
 
     mainWindow.on('closed', () => {
@@ -94,10 +94,6 @@ ipcMain.on('showSettings', (event, arg) => {
     if (typeof settingsWindow === 'undefined' || settingsWindow === null) {
         createSettingsWindow()
     }
-});
-
-ipcMain.on('setDiscordRichPresence', (event, arg) => {
-    discordRPC.updatePresence(arg);
 });
 
 ipcMain.on('request-css-reload', (event) => {

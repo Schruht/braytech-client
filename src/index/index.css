@@ -7,13 +7,13 @@ html {
     background-color: var(--primary-color);
 }
 
-#main {
+#content {
     border: none;
     height: 100vh;
     width: 100vw;
 }
 
-#xur {
+#xurButton {
     display: none;
     background-image: URL(../assets/icons/xur-96.png);
     background-size: 19px 19px;
@@ -21,7 +21,7 @@ html {
     margin-left: 3px;
 }
 
-#xur:hover {
+#xurButton:hover {
     background-color: transparent;
 }
 
@@ -49,7 +49,7 @@ html {
     }
 }
 
-#xur::after {
+#xurButton::after {
     content: "";
     position: absolute;
     top: 15px;
@@ -66,7 +66,7 @@ html {
     animation-iteration-count: infinite;
 }
 
-#xur::before {
+#xurButton::before {
     content: "";
     position: absolute;
     top: 100%;
@@ -78,6 +78,6 @@ html {
     transition: top 0.4s ease;
 }
 
-#xur:hover::before {
+#xurButton:hover::before {
     top: 0;
 }

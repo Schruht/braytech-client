@@ -93,11 +93,11 @@
     flex-wrap: nowrap;
 }
 
-#more {
+#moreButton {
     background-image: var(--more);
 }
 
-#back {
+#backButton {
     background-image: var(--back);
 }
 
@@ -121,6 +121,7 @@
     list-style: none;
     color: var(--font-color);
     font-size: 12px;
+    box-shadow: 2px 2px 2px #00000040;
     -webkit-user-select: none;
 }
 
