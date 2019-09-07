@@ -1,21 +1,50 @@
 {
     "name": "braytech-client",
     "productName": "Braytech Client",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Desktop wrapper for braytech.org",
     "main": "app.js",
     "scripts": {
         "start": "electron .",
-        "build-dev": "electron-packager . --platform=win32 --prune --out=\"build/dev\""
+        "pack": "electron-builder --dir",
+        "dist": "electron-builder",
+        "postinstall": "electron-builder install-app-deps"
     },
     "repository": "",
     "author": "Pixel",
     "license": "CC0-1.0",
     "devDependencies": {
         "electron": "^6.0.0",
-        "electron-packager": "^14.0.4"
+        "electron-builder": "^21.2.0"
     },
     "dependencies": {
+        "electron-settings": "^3.2.0",
+        "figlet": "^1.2.3",
         "mousetrap": "^1.6.3"
+    },
+    "build": {
+        "appId": "braytechclient",
+        "win": {
+            "target": [
+                {
+                    "target": "nsis",
+                    "arch": [
+                        "x64",
+                        "ia32"
+                    ]
+                }
+            ],
+            "icon": "appicon.ico"
+        },
+        "nsis": {
+            "oneClick": "false",
+            "allowToChangeInstallationDirectory": "true"
+        },
+        "portable": {
+            "useZip": "true"
+        },
+        "directories": {
+            "buildResources": "./src/buildResources"
+        }
     }
 }

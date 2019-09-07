@@ -1,36 +1,35 @@
 const { remote, ipcRenderer } = require('electron'),
     path = require('path'),
     fs = require('fs'),
-    DOM = require('../modules/DOM')(document);
+    doc = require('../modules/DOM').DOMElement(document),
+    settings = require('electron-settings')
 
-var settings;
+const settingsDefinition = JSON.parse(fs.readFileSync(path.join(__dirname, '../../static/settings.json'), 'utf8'))
 
-DOM.onReady(function () {
-    let window = remote.getCurrentWindow();
+doc.onReady(function () {
+    let window = remote.getCurrentWindow()
 
     const {
-        close,
+        closeButton,
         list
-    } = DOM;
+    } = doc
 
-    document.documentElement.setAttribute('data-theme', getSettings().clientTheme.value)
+    document.documentElement.setAttribute('data-theme', settings.get('clientTheme'))
 
-    settings = getSettings()
-
-    for (key in settings) {
+    for (var key in settingsDefinition) {
         list.appendChild(cellFor(key))
     }
 
     close.addEventListener('click', event => {
-        window = remote.getCurrentWindow();
-        window.close();
-    });
+        window = remote.getCurrentWindow()
+        window.close()
+    })
 })
 
 function cellFor(key) {
-    let entry = settings[key]
+    let entry = settingsDefinition[key]
     let type = entry.type
-    let value = entry.value
+    let value = settings.get(key)
     let displayName = entry.displayName
 
     let li = document.createElement('li')
@@ -44,7 +43,7 @@ function cellFor(key) {
             break
         case 'pick':
             let options = ''
-            let displayValue;
+            let displayValue
             for (optionKey in entry.options) {
                 let option = entry.options[optionKey]
                 let isActive = option.value === value
@@ -62,44 +61,27 @@ function cellFor(key) {
     return li
 }
 
-function getSettings() {
-    return JSON.parse(fs.readFileSync(path.join(__dirname, '../../data/settings.json'), 'utf8'));
-}
-
 function writeChange(DOMElement, key, newValue) {
 
-    console.log(`DOMElement: ${DOMElement}, Key: ${key}, newValue: ${newValue}`)
+    settings.set(key, newValue)
 
-    return new Promise(function (resolve, reject) {
-        let settings = getSettings()
-        let setting = settings[key]
-        setting.value = newValue
-        let settingsString = JSON.stringify(settings)
+    if (DOMElement) {
+        DOMElement.querySelectorAll('.accessory-picker-item').forEach((item) => {
+            if (item.id === newValue) {
+                item.classList.add('accessory-picker-item-active')
+            } else {
+                item.classList.remove('accessory-picker-item-active')
+            }
+        })
+    }
+    if (settingsDefinition[key].requiresCSSUpdate) {
+        ipcRenderer.send('request-css-reload')
 
-        if (DOMElement) {
-            DOMElement.querySelectorAll('.accessory-picker-item').forEach((item) => {
-                if (item.id === newValue) {
-                    item.classList.add('accessory-picker-item-active')
-                } else {
-                    item.classList.remove('accessory-picker-item-active')
-                }
-            })
-        }
-
-        fs.writeFile(path.join(__dirname, '../../data/settings.json'), settingsString, 'utf8', (err) => {
-            if (err)
-                reject(err)
-            else
-                if (setting.requiresCSSUpdate) {
-                    ipcRenderer.send('request-css-reload')
-
-                    document.documentElement.setAttribute(
-                        'data-theme',
-                        getSettings().clientTheme.value
-                    );
-                    for (var link of document.querySelectorAll("link[rel=stylesheet]")) link.href = link.href.replace(/\?.*|$/, "?ts=" + new Date().getTime())
-                }
-            resolve()
-        });
-    })
+        document.documentElement.setAttribute(
+            'data-theme',
+            settings.get('clientTheme')
+        )
+        
+        for (var link of document.querySelectorAll("link[rel=stylesheet]")) link.href = link.href.replace(/\?.*|$/, "?ts=" + new Date().getTime())
+    }
 }

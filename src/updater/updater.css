@@ -1,0 +1,37 @@
+#animation {
+    position: absolute;
+    top: 110px;
+    right: 0;
+    left: 0;
+    bottom: 60px;
+    overflow: auto;
+    padding: 15px;
+    -webkit-user-select: none;
+}
+
+#animation::-webkit-scrollbar {
+    display: none;
+}
+
+.code-block {
+    height: 17px;
+    width: 0;
+    background-color: #BBBBBB;
+    border-radius: 4px;
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    transition: width 0.2s ease;
+}
+
+.title {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 60px;
+    padding: 20px;
+    border-bottom: 2px solid var(--secondary-color);
+    -webkit-app-region: drag;
+    -webkit-user-select: none;
+}

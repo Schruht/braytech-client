@@ -1,53 +1,65 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Braytech Client</title>
+        <link rel="stylesheet" type="text/css" href="../css/shared.css" />
+        <link rel="stylesheet" type="text/css" href="../css/colors.css" />
+        <link rel="stylesheet" type="text/css" href="index.css" />
+        <link rel="stylesheet" type="text/css" href="../css/window.css" />
+        <link rel="stylesheet" type="text/css" href="../assets/fonts/nhg/font.css">
+    </head>
 
-<head>
-    <meta charset="UTF-8" />
-    <title>Braytech Client</title>
-    <link rel="stylesheet" type="text/css" href="../css/colors.css" />
-    <link rel="stylesheet" type="text/css" href="index.css" />
-    <link rel="stylesheet" type="text/css" href="../css/window.css" />
-</head>
-
-<body id="root">
-    <div class="window-frame">
-        <div class="window-controls-left">
-            <div class="window-control dropdown-container" id="moreButton">
-                <ul class="dropdown">
-                    <li id="reloadButton">
-                        Reload<span class="shortcut-hint">Shift + Ctrl + R</span>
-                    </li>
-                    <li id="reloadAppButton" style="display:none">
-                        Reload Window<span class="shortcut-hint">Ctrl + R</span>
-                    </li>
-                    <li id="devToolsButton" style="display:none">Toggle Developer Tools</li>
-                    <li class="list-separator"></li>
-                    <li id="settingsButton">
-                        Settings<span class="shortcut-hint">Ctrl + ,</span>
-                    </li>
-                    <li id="creditsButton">Credits</li>
-                    <li class="list-separator"></li>
-                    <li id="quitButton">
-                        Close Braytech Client<span class="shortcut-hint">Alt + F4</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="window-control back-disabled" id="backButton"></div>
-            <div class="window-control" id="xurButton">
-                <div id="xur-animation-container">
-                    <div id="xur-animation-rotate"></div>
+    <body id="root">
+        <div class="window-frame">
+            <div class="window-controls-left">
+                <div class="window-control dropdown-container" id="moreButton">
+                    <ul class="dropdown">
+                        <li id="reloadButton">
+                            Reload<span class="shortcut-hint"
+                                >Shift + Ctrl + R</span
+                            >
+                        </li>
+                        <li id="reloadAppButton" style="display:none">
+                            Reload Window<span class="shortcut-hint"
+                                >Ctrl + R</span
+                            >
+                        </li>
+                        <li id="devToolsButton" style="display:none">
+                            Toggle Developer Tools
+                        </li>
+                        <li class="list-separator"></li>
+                        <li id="settingsButton">
+                            Settings<span class="shortcut-hint">Ctrl + ,</span>
+                        </li>
+                        <li id="creditsButton">Credits</li>
+                        <li class="list-separator"></li>
+                        <li id="quitButton">
+                            Close Braytech Client<span class="shortcut-hint"
+                                >Alt + F4</span
+                            >
+                        </li>
+                    </ul>
+                </div>
+                <div class="window-control back-disabled" id="backButton"></div>
+                <div class="window-control" id="xurButton">
+                    <div id="xur-animation-container">
+                        <div id="xur-animation-rotate"></div>
+                    </div>
                 </div>
             </div>
+            <div class="window-controls">
+                <div class="window-control" id="min"></div>
+                <div class="window-control" id="max"></div>
+                <div
+                    class="window-control"
+                    id="restore"
+                    style="display:none;"
+                ></div>
+                <div class="window-control" id="closeButton"></div>
+            </div>
         </div>
-        <div class="window-controls">
-            <div class="window-control" id="min"></div>
-            <div class="window-control" id="max"></div>
-            <div class="window-control" id="restore" style="display:none;"></div>
-            <div class="window-control" id="close"></div>
-        </div>
-    </div>
-    <webview id="content" src=""></webview>
-    <script src="./renderer.js"></script>
-</body>
-
+        <webview id="content" src="" preload="./preload.js"></webview>
+        <script src="./renderer.js"></script>
+    </body>
 </html>

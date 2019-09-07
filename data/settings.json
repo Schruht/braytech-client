@@ -1,1 +1,0 @@
-{"devmode":{"displayName":"Developer Features","type":"switch","value":true},"braytechBeta":{"displayName":"Use <i>beta.braytech.org</i>","type":"switch","value":false},"clientTheme":{"displayName":"Client Theme","type":"pick","options":[{"display":"Light","value":"light"},{"display":"Dark","value":"dark"}],"value":"light","requiresCSSUpdate":true}}

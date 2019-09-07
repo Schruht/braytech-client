@@ -58,7 +58,7 @@
     background-color: var(--secondary-color);
 }
 
-#close {
+#closeButton {
     background-image: var(--close);
 }
 
@@ -74,7 +74,7 @@
     background-image: var(--restore);
 }
 
-#close:hover {
+#closeButton:hover {
     background-color: #cc2020;
     background-image: URL(../assets/window-controls/close.png);
 }
@@ -154,6 +154,7 @@
     float: right;
     font-size: 10px;
     color: var(--secondary-text-color);
+    text-transform: capitalize;
 }
 
 .bar-title {

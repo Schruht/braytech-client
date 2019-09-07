@@ -1,12 +1,3 @@
-body,
-html {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    font-family: sans-serif;
-    background-color: var(--primary-color);
-}
-
 #content {
     border: none;
     height: 100vh;

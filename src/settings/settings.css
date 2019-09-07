@@ -18,13 +18,6 @@ body {
     left: 0;
 }
 
-h1 {
-    font-size: 17px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding-left: 15px;
-}
-
 .list {
     list-style: none;
     width: 100%;
@@ -47,11 +40,8 @@ h1 {
     border-bottom: 1px solid var(--accent-color);
 }
 
-.cell-title {
-    font-size: 12px;
-}
-
 .accessory-picker {
+    font-family: 'nhg display', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .accessory-picker-item {
